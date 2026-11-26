@@ -101,7 +101,12 @@ testpaths = ["tests"]
 pythonpath = ["tests"]
 addopts = ["-ra", "--strict-markers", "--strict-config"]
 markers = ["hardware: needs a real ELM327 adapter (run with --port=<url>)"]
-filterwarnings = ["error"]
+filterwarnings = [
+    "error",
+    # A cache that cannot be written (on Windows, usually antivirus or an IDE holding the folder)
+    # is an environment problem, not a test failure.
+    "ignore::pytest.PytestCacheWarning",
+]
 
 [tool.coverage.run]
 source = ["elm327"]
