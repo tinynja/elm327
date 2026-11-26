@@ -37,7 +37,7 @@ def fake() -> FakeELM327:
 
 @pytest.fixture
 def elm(fake: FakeELM327) -> Iterator[ELM327]:
-    """A driver connected to :func:`fake`."""
+    """A driver connected to the `fake` adapter."""
     with ELM327(fake.transport, timeout=0.5) as device:
         yield device
 
