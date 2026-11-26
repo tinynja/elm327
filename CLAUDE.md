@@ -4,5 +4,6 @@
 - Before every commit: `uv run ruff format && uv run ruff check && uv run mypy && uv run pytest --cov`. All must pass.
 - Unit tests never need hardware; extend `tests/emulator/fake_elm.py` when a new device behaviour must be simulated.
 - Keep the public surface in `src/elm327/__init__.py` (`__all__`) deliberate; anything else is private.
+- When tooling or configuration changes (pyproject.toml, uv, Ruff, mypy, pytest, MkDocs, workflows), update the matching page in `docs/development/` in the same commit.
 - Commit in small, logical Conventional Commits.
 - Commit messages end with the `Co-Authored-By` trailer only. Never add a `Claude-Session` trailer or session link.

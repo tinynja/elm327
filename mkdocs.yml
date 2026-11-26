@@ -1,6 +1,8 @@
 site_name: elm327
 site_description: Connect to, configure and communicate with ELM327 OBD-II/CAN adapters.
 strict: true
+validation:
+  anchors: warn # broken #heading links fail the strict build too
 
 theme:
   name: mkdocs
@@ -12,6 +14,15 @@ nav:
   - Home: index.md
   - Quick start: quickstart.md
   - API reference: api.md
+  - Development:
+      - Overview: development/index.md
+      - Project tour: development/project-tour.md
+      - pyproject.toml: development/pyproject.md
+      - uv: development/uv.md
+      - Code quality: development/code-quality.md
+      - Testing: development/testing.md
+      - Documentation: development/documentation.md
+      - CI and releasing: development/releasing.md
 
 plugins:
   - search

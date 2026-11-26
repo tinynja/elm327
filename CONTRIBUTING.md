@@ -1,5 +1,7 @@
 # Contributing
 
+This page lists the rules and commands. The reasoning behind the tooling (packaging, uv, Ruff, mypy, pytest, MkDocs, CI and releasing) is explained in the **Development** section of the documentation (`docs/development/`).
+
 ## Setup
 
 ```bash
