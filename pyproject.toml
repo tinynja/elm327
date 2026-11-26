@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.27", "hatch-vcs>=0.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "elm327"
+dynamic = ["version"]
+description = "Connect to, configure and communicate with ELM327 OBD-II/CAN adapters, including ATMA bus monitoring."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Amine Kchouk" }]
+keywords = ["elm327", "obd", "obd2", "obdii", "can", "canbus", "automotive", "serial"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+    "Typing :: Typed",
+]
+dependencies = ["pyserial>=3.5"]
+
+# [project.urls] is added once the repository has a public home.
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13",
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.8",
+    "types-pyserial>=3.5",
+]
+docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.27"]
+
+# ---------------------------------------------------------------- build
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/elm327"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", "mkdocs.yml", "README.md", "CHANGELOG.md", "LICENSE"]
+
+# ---------------------------------------------------------------- ruff
+
+[tool.ruff]
+line-length = 99
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W", "F", "I", "UP", "B", "SIM", "N", "D", "ANN", "RUF",
+    "PL", "PT", "TRY", "LOG", "G", "S", "C4", "PIE", "RET", "PTH", "FA",
+]
+ignore = [
+    "E501",    # the formatter enforces 99 columns; long string literals are deliberately not split
+    "TRY003",  # exception messages carry the command and raw response by design
+    "PLR0913", # keyword-only options on public constructors are fine
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["elm327", "emulator"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "S101", "PLR2004", "ANN401"]
+"examples/**" = ["D", "T201"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+# ---------------------------------------------------------------- mypy
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+files = ["src", "tests"]
+mypy_path = "tests"
+warn_unreachable = true
+
+# ---------------------------------------------------------------- pytest
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = ["hardware: needs a real ELM327 adapter (run with --port=<url>)"]
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+source = ["elm327"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "@abstractmethod", "raise NotImplementedError"]
