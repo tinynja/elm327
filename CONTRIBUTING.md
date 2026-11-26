@@ -76,6 +76,8 @@ uv run pre-commit install    # format, lint and type-check on every commit
 
 ## Releasing
 - Versions come from git tags via `hatch-vcs` and follow SemVer. The API is unstable while on `0.x`.
-- `git tag v0.1.0 && git push origin v0.1.0` triggers `.github/workflows/release.yml`, which builds, then publishes to PyPI (Trusted Publishing) and, if configured, to a private index.
-- Private index: set repository variable `PRIVATE_INDEX_URL` and secrets `PRIVATE_INDEX_USERNAME` / `PRIVATE_INDEX_PASSWORD`.
+- `git tag v0.1.0 && git push origin v0.1.0` triggers `.github/workflows/release.yml`: it reruns CI, builds once, then publishes the same files to each enabled target.
+- PyPI: register the repository as a Trusted Publisher on pypi.org (environment `pypi`), then set repository variable `PUBLISH_TO_PYPI=true`. No token is stored.
+- Private index: set repository variable `PRIVATE_INDEX_URL` and secrets `PRIVATE_INDEX_USERNAME` / `PRIVATE_INDEX_PASSWORD` (environment `private-index`).
+- Try a release on TestPyPI first.
 - Supported Python versions follow upstream end-of-life dates; currently 3.11+.

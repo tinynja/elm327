@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+      - run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  # Trusted Publishing: configure this repository/workflow/environment as a trusted
+  # publisher on pypi.org first. No API token is stored anywhere.
+  pypi:
+    needs: build
+    if: vars.PUBLISH_TO_PYPI == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/elm327/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  # Private index (devpi, Nexus, Artifactory, GitLab, ...). Enabled when the repository
+  # variable PRIVATE_INDEX_URL is set; credentials come from secrets.
+  private-index:
+    needs: build
+    if: vars.PRIVATE_INDEX_URL != ''
+    runs-on: ubuntu-latest
+    environment: private-index
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: astral-sh/setup-uv@v6
+      - run: uv publish --publish-url "$PUBLISH_URL" dist/*
+        env:
+          PUBLISH_URL: ${{ vars.PRIVATE_INDEX_URL }}
+          UV_PUBLISH_USERNAME: ${{ secrets.PRIVATE_INDEX_USERNAME }}
+          UV_PUBLISH_PASSWORD: ${{ secrets.PRIVATE_INDEX_PASSWORD }}
