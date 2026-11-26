@@ -5,3 +5,4 @@
 - Unit tests never need hardware; extend `tests/emulator/fake_elm.py` when a new device behaviour must be simulated.
 - Keep the public surface in `src/elm327/__init__.py` (`__all__`) deliberate; anything else is private.
 - Commit in small, logical Conventional Commits.
+- Commit messages end with the `Co-Authored-By` trailer only. Never add a `Claude-Session` trailer or session link.
