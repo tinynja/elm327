@@ -3,17 +3,10 @@ site_description: Connect to, configure and communicate with ELM327 OBD-II/CAN a
 strict: true
 
 theme:
-  name: material
-  features:
-    - content.code.copy
-    - navigation.sections
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle: { icon: material/brightness-7, name: Switch to dark mode }
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle: { icon: material/brightness-4, name: Switch to light mode }
+  name: mkdocs
+  color_mode: auto # follow the OS light/dark preference
+  user_color_mode_toggle: true
+  navigation_depth: 3
 
 nav:
   - Home: index.md
@@ -37,6 +30,6 @@ plugins:
 
 markdown_extensions:
   - admonition
-  - pymdownx.highlight
-  - pymdownx.superfences
   - tables
+  - toc:
+      permalink: true
