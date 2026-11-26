@@ -21,7 +21,7 @@ DEFAULT_BAUDRATE: Final = 38400
 class SerialTransport(Transport):
     """Transport over a serial port.
 
-    ``port`` is anything :func:`serial.serial_for_url` accepts: a device path (``/dev/ttyUSB0``),
+    ``port`` is anything `serial.serial_for_url()` accepts: a device path (``/dev/ttyUSB0``),
     a Windows port (``COM3``) or a pyserial URL (``rfc2217://host:port``, ``loop://``).
     """
 

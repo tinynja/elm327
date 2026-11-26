@@ -17,15 +17,17 @@ __all__ = ["LoopbackTransport"]
 class LoopbackTransport(Transport):
     """A transport whose other end is Python code.
 
-    Bytes written by the host are passed to ``on_write``. Bytes given to :meth:`feed` become
-    readable by the host. This lets an emulator stand in for a real adapter.
+    Bytes written by the host are passed to ``on_write``. Bytes given to
+    [`feed()`][elm327.transport.LoopbackTransport.feed] become readable by the host. This lets an
+    emulator stand in for a real adapter.
     """
 
     def __init__(self, on_write: Callable[[bytes], None] | None = None) -> None:
         """Create a closed loopback transport.
 
         Args:
-            on_write: Called with every chunk the host writes. It may call :meth:`feed`.
+            on_write: Called with every chunk the host writes. It may call
+                [`feed()`][elm327.transport.LoopbackTransport.feed].
         """
         self._on_write = on_write
         self._rx = bytearray()

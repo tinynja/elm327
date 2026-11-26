@@ -42,7 +42,7 @@ def open_transport(url: str, *, baudrate: int = DEFAULT_BAUDRATE) -> Transport:
     Raises:
         ValueError: If the URL is malformed.
 
-    Example:
+    Examples:
         >>> open_transport("tcp://192.168.0.10")
         <TcpTransport 192.168.0.10:35000 closed>
     """

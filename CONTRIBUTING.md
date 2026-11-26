@@ -59,7 +59,8 @@ uv run pre-commit install    # format, lint and type-check on every commit
 - Background threads are daemon threads, named `elm327-<purpose>`, with an explicit stop path.
 
 ### Docstrings and comments
-- Google style on every public item (`Args`, `Returns`, `Raises`, `Example`).
+- Google style on every public item (`Args`, `Returns`, `Raises`, `Examples`).
+- Docstrings are Markdown (rendered by mkdocstrings). Cross-reference with ``[`ELM327`][elm327.ELM327]``, never Sphinx roles like ``:class:`ELM327` ``; a test enforces this.
 - Comments explain *why* (device and clone quirks), not *what*.
 
 ### Tests

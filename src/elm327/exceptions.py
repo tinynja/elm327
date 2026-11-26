@@ -1,8 +1,10 @@
 """Exceptions raised by the elm327 package.
 
-Every exception derives from :class:`ELM327Error`, so callers can catch the whole family with a
-single ``except`` clause. Error *replies* from the adapter (``NO DATA``, ``?``, ``BUFFER FULL`` ...)
-are :class:`ResponseError` subclasses and carry the command that was sent and the raw reply.
+Every exception derives from [`ELM327Error`][elm327.exceptions.ELM327Error], so callers can
+catch the whole family with a single ``except`` clause. Error *replies* from the adapter
+(``NO DATA``, ``?``, ``BUFFER FULL`` ...) are
+[`ResponseError`][elm327.exceptions.ResponseError] subclasses and carry the command that was
+sent and the raw reply.
 """
 
 from __future__ import annotations
@@ -34,7 +36,7 @@ class TransportError(ELM327Error):
 class ELMTimeoutError(ELM327Error, TimeoutError):
     """The adapter did not finish its reply in time.
 
-    Also a :class:`TimeoutError`, so generic timeout handling keeps working.
+    Also a `TimeoutError`, so generic timeout handling keeps working.
 
     Attributes:
         command: The command that was waiting for a reply, if any.

@@ -1,4 +1,4 @@
-"""The :class:`ELM327` adapter driver."""
+"""The [`ELM327`][elm327.ELM327] adapter driver."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ class ELM327:
     always be parsed reliably. All methods are thread-safe: one lock serialises access to the
     adapter.
 
-    Example:
+    Examples:
         >>> with ELM327.open("/dev/ttyUSB0") as elm:  # doctest: +SKIP
         ...     elm.version
         '1.5'
@@ -57,12 +57,13 @@ class ELM327:
         timeout: float = DEFAULT_TIMEOUT,
         settings: Settings | None = None,
     ) -> None:
-        """Create a driver for ``transport``. Call :meth:`connect` before using it.
+        """Create a driver for ``transport``; [`connect()`][elm327.ELM327.connect] it before use.
 
         Args:
             transport: The connection to the adapter. It may be open or closed.
             timeout: Default time to wait for a complete reply, in seconds.
-            settings: Output format to apply on connect. Defaults to :class:`Settings()`.
+            settings: Output format to apply on connect. Defaults to
+                [`Settings()`][elm327.Settings].
 
         Raises:
             ValueError: If ``timeout`` is not positive.
@@ -88,10 +89,10 @@ class ELM327:
         """Open a connection from a URL and initialise the adapter.
 
         Args:
-            url: A connection URL, see :func:`elm327.transport.open_transport`.
+            url: A connection URL, see [`open_transport()`][elm327.transport.open_transport].
             baudrate: UART speed for serial adapters, in bit/s.
             timeout: Default time to wait for a complete reply, in seconds.
-            settings: Output format to apply. Defaults to :class:`Settings()`.
+            settings: Output format to apply. Defaults to [`Settings()`][elm327.Settings].
 
         Returns:
             A connected driver.
@@ -123,7 +124,7 @@ class ELM327:
 
     @property
     def is_connected(self) -> bool:
-        """Whether :meth:`connect` succeeded and the transport is still open."""
+        """Whether [`connect()`][elm327.ELM327.connect] succeeded and the transport is open."""
         return self._connected and self._transport.is_open
 
     @property
@@ -201,7 +202,7 @@ class ELM327:
         Args:
             command: The command, without the trailing carriage return.
             timeout: Time to wait for the complete reply, in seconds. Defaults to
-                :attr:`timeout`.
+                [`timeout`][elm327.ELM327.timeout].
 
         Returns:
             The reply lines, e.g. ``["OK"]`` or ``["41 00 BE 3E B8 13"]``.
@@ -210,8 +211,9 @@ class ELM327:
             ValueError: If ``command`` is empty or not printable ASCII.
             TransportError: If not connected or the connection fails.
             ELMTimeoutError: If the reply does not complete in time.
-            ResponseError: If the adapter reports an error. The subclass says which one, e.g.
-                :class:`~elm327.NoDataError` or :class:`~elm327.UnsupportedCommandError`.
+            ResponseError: If the adapter reports an error. The subclass says which one,
+                e.g. [`NoDataError`][elm327.exceptions.NoDataError] or
+                [`UnsupportedCommandError`][elm327.exceptions.UnsupportedCommandError].
         """
         command = _commands.validate(command)
         wait = self._timeout if timeout is None else _check_timeout(timeout)
@@ -226,8 +228,8 @@ class ELM327:
         """Reset the adapter completely (sends ``ATZ``).
 
         All settings return to their power-on values, so the driver's output format is reset too.
-        :meth:`connect` re-applies the requested settings; after calling this directly, use
-        :meth:`configure` if needed.
+        [`connect()`][elm327.ELM327.connect] re-applies the requested settings; after calling this
+        directly, use [`configure()`][elm327.ELM327.configure] if needed.
 
         Returns:
             The identification banner, e.g. ``"ELM327 v1.5"``.

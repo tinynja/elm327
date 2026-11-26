@@ -1,6 +1,6 @@
 """Connect to, configure and communicate with ELM327 OBD-II/CAN adapters.
 
-Example:
+Examples:
     >>> from elm327 import ELM327
     >>> with ELM327.open("/dev/ttyUSB0") as elm:  # doctest: +SKIP
     ...     elm.read_voltage()

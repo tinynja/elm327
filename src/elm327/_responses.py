@@ -81,7 +81,7 @@ def strip_echo(command: str, lines: Sequence[str]) -> list[str]:
 
 
 def check_errors(command: str, lines: Sequence[str]) -> None:
-    """Raise the matching :class:`ResponseError` if the reply reports an error.
+    """Raise the matching error if the reply reports one.
 
     Raises:
         ResponseError: The most specific subclass for the first error line found.

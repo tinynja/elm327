@@ -11,7 +11,7 @@ __all__ = ["POWER_ON_SETTINGS", "Settings"]
 class Settings:
     """How the adapter formats its replies.
 
-    The defaults are what :class:`~elm327.ELM327` applies after connecting. They are chosen for
+    The defaults are what [`ELM327`][elm327.ELM327] applies after connecting. They are chosen for
     throughput and easy parsing, not to match the chip's power-on defaults.
 
     Attributes:
